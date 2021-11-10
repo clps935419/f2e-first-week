@@ -88,6 +88,8 @@
     .banner-area {
         padding: 23px 27px 22px 27px;
         position: relative;
+        background: #FFFFFF;
+
 
         &_img {
             height: 490px;

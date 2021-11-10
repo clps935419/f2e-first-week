@@ -36,13 +36,13 @@ export default {
 html,body,#app,.wrapper{
   height: 100%;
 }
+body{
+  background-color: #F5F6FA;
+}
 .wrapper{
-  display: flex;
-  flex-direction: column;
+  
 }
 .content{
-  flex: 1;
-  background:#F5F6FA;
   min-height: 330px;
 }
 

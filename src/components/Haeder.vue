@@ -43,6 +43,8 @@
         flex-shrink:0;
         padding: 0 108px;
         padding-bottom: 18px;
+        background: #FFFFFF;
+
 
         &_logo {
             background-image: url("#{$header_url}logo.png");

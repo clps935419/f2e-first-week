@@ -1,25 +1,43 @@
-import { apiGetActivity } from '@/api/index.js';
-import axios from 'axios';
+import { apiGetActivity, apiGetRestaurant } from '@/api/index.js';
 export default {
     namespaced: true,
-    state: {},
+    state: {
+        popularActivity: [], //熱門活動
+        popularRestaurant: [], //熱門餐廳
+    },
     mutations: {
-        init() {
-
+        init(state, data) {
+            state.popularActivity = data.popularActivity;
+            state.popularRestaurant = data.popularRestaurant;
         },
     },
     actions: {
         async handleInit(context, data) {
-            console.log('測試', apiGetActivity);
+            console.log('測試', apiGetRestaurant);
             try {
+                let tmpObj = {};
                 const res = await apiGetActivity();
-                console.log('re32', res);
-                context.commit('init', res.data);
+                const res2 = await apiGetRestaurant();
+
+                tmpObj.popularActivity = res.data;
+                tmpObj.popularRestaurant = res2.data;
+
+                console.log('re32', res2);
+                context.commit('init', tmpObj);
                 return res.data;
             } catch (error) {
                 console.error('error', error);
             }
         },
     },
-    getters: {},
+    getters: {
+        getPopularActivity(state) {
+            console.log('get', state.popularActivity);
+            return state.popularActivity;
+        },
+        getPopularRestaurant(state) {
+            console.log('get', state.popularRestaurant);
+            return state.popularRestaurant;
+        },
+    },
 };

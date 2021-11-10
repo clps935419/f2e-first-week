@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import Homepage from './Homepage'
 export default createStore({
     state: {
-        isLoading: true,
+        isLoading: false,
     },
     mutations: {
         setLoading(state,data){
