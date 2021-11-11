@@ -14,12 +14,21 @@
 <template>
     <div class="header">
         <div class="header_left">
+            <router-link  to="/">
             <div class="header_logo"></div>
+            </router-link>
+            
         </div>
         <div class="header_right">
-            <a class="spot" href=""><i ></i><span>台灣景點</span> </a>
-            <a class="live" href=""><i ></i><span>美食住宿</span> </a>
-            <a class="transport" href=""><i ></i><span>景點交通</span></a>
+            <router-link class="spot" to="/spot">
+                <i ></i><span>台灣景點</span>
+            </router-link>
+            <router-link class="live" to="/restaurant">
+               <i ></i><span>美食住宿</span>
+            </router-link>
+            <router-link class="transport" to="/transport">
+               <i ></i><span>景點交通</span>
+            </router-link>
         </div>
     </div>
 </template>
