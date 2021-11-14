@@ -3,13 +3,15 @@ import Header from './components/Haeder.vue';
 import Banner from './components/Banner.vue';
 import Footer from './components/Footer.vue';
 import Loading from './components/Loading.vue';
+import SearchResult from './components/SearchResult.vue';
 
 export default {
   components:{
     Header,
     Banner,
     Footer,
-    Loading
+    Loading,
+    SearchResult
   },
   setup() {
     
@@ -22,6 +24,7 @@ export default {
   <Banner/>
   <div class="content">
   <Loading/>  
+  <SearchResult/>
   <router-view/>
   </div>
   <Footer/>

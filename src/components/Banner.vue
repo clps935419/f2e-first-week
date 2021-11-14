@@ -1,10 +1,18 @@
 <script>
     import {
-        reactive
+        reactive,
+        ref
     } from '@vue/reactivity'
+    import {
+        watch
+    } from '@vue/runtime-core';
+    import {
+        useStore
+    } from 'vuex';
     export default {
         components: {},
         setup() {
+            const store = useStore();
             const groupListArr = reactive([{
                     text: '美食',
                     val: 'restaurant'
@@ -47,10 +55,57 @@
                     '連江縣',
                     '金門縣'
                 ]
-            )
+            );
+            const searchText = ref('');
+            const searchGroup = ref('');
+            const searchLocate = ref('');
+            // watch(searchLocate,(item)=>{
+            //     console.log('it',item)
+            // })
+            const handleSearch = () => {
+                const parmsObj = {
+                    searchText: searchText.value,
+                    searchGroup: searchGroup.value,
+                    searchLocate: searchLocate.value
+                }
+                store.dispatch('handleIsSearch', true);
+                store.dispatch('handleSearch', parmsObj).then((res) => {
+                    handleData(res);
+                });
+            }
+            const handleData = (data) => {
+                console.log('data', data)
+                let i = 0;
+                data.forEach(item => {
+                    const img = new Image();
+                    img.src = item.Picture.PictureUrl1;
+
+                    img.onload = () => {
+                        let isLoading = false;
+                        i++;
+                        console.log('i',i,data.length,item.Name)
+
+                        if (i === data.length) {
+                            isLoading = false;
+                        } else {
+                            isLoading = true;
+                        }
+                        store.dispatch('handleLoading', isLoading);
+                    }
+                    img.onerror = function() {
+                        //display error
+                        console.error('i**',item.Name,'圖片讀取失敗')
+                        
+                    };
+                });
+            }
             return {
                 groupListArr,
-                cityArr
+                cityArr,
+                searchText,
+                searchGroup,
+                searchLocate,
+                handleSearch
             }
         }
     }
@@ -64,20 +119,23 @@
                 台北、台中、台南、屏東、宜蘭……遊遍台灣
             </div>
             <div class="input-area">
-                <input type="text" placeholder="請輸入關鍵字"><i></i>
+                <input type="text" placeholder="請輸入關鍵字" v-model="searchText">
+                <i @click="handleSearch"></i>
             </div>
             <div class="select-area-2">
-                <select name="" id="">
+                <select name="" id="" v-model="searchGroup">
+                    <option value="">請選擇類別</option>
                     <option v-for="item in groupListArr" :key="item.name" :value="item.val">
                         {{item.text}}
                     </option>
                 </select>
-                <select name="" id="">
+                <select name="" id="" v-model="searchLocate">
+                    <option value="" disabled>請選擇縣市</option>
                     <option v-for="item in cityArr" :value="item" :key="item">
                         {{item}}
                     </option>
                 </select>
-                <i></i>
+                <!-- <i></i> -->
             </div>
         </div>
     </div>
@@ -89,7 +147,33 @@
         padding: 23px 27px 22px 27px;
         position: relative;
         background: #FFFFFF;
+        position: relative;
+        margin-top: 104px;
+        &::before,
+            &::after {
+                position: absolute;
+                content: "";
+                bottom: 5px;
+                z-index: -1;
+                width: calc(50% - 12px);
+                height: 36px;
+                background-color: #0d0b0c;
+                opacity: .3;
+                -webkit-filter: blur(5px);
+                filter: blur(5px);
+            }
 
+            &::before {
+                left: 0px;
+                -webkit-transform: matrix(-1, 0, 0, 1, 0, 0) rotate(5deg);
+                transform: matrix(-1, 0, 0, 1, 0, 0) rotate(5deg);
+            }
+
+            &::after {
+                right: 0px;
+                -webkit-transform: matrix(-1, 0, 0, 1, 0, 0) rotate(-5deg);
+                transform: matrix(-1, 0, 0, 1, 0, 0) rotate(-5deg);
+            }
 
         &_img {
             height: 490px;
@@ -164,6 +248,7 @@
 
                 box-shadow: 0px 4px 3px rgba(13, 11, 12, 0.2);
                 border-radius: 6px;
+                cursor: pointer;
             }
         }
 

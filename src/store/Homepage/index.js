@@ -13,7 +13,6 @@ export default {
     },
     actions: {
         async handleInit(context, data) {
-            console.log('測試', apiGetRestaurant);
             try {
                 let tmpObj = {};
                 const res = await apiGetActivity();
@@ -22,21 +21,17 @@ export default {
                 tmpObj.popularActivity = res.data;
                 tmpObj.popularRestaurant = res2.data;
 
-                console.log('re32', res2);
                 context.commit('init', tmpObj);
                 return res.data;
             } catch (error) {
-                console.error('error', error);
             }
         },
     },
     getters: {
         getPopularActivity(state) {
-            console.log('get', state.popularActivity);
             return state.popularActivity;
         },
         getPopularRestaurant(state) {
-            console.log('get', state.popularRestaurant);
             return state.popularRestaurant;
         },
     },

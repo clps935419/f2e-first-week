@@ -26,9 +26,9 @@
             <router-link class="live" to="/restaurant">
                <i ></i><span>美食住宿</span>
             </router-link>
-            <router-link class="transport" to="/transport">
+            <!-- <router-link class="transport" to="/transport">
                <i ></i><span>景點交通</span>
-            </router-link>
+            </router-link> -->
         </div>
     </div>
 </template>
@@ -48,11 +48,16 @@
         justify-content: space-between;
         align-items: flex-end;
         height: 104px;
+        width: 100%;
         flex-basis: 104px;
         flex-shrink:0;
         padding: 0 108px;
         padding-bottom: 18px;
         background: #FFFFFF;
+        position: fixed;
+        top: 0;
+        z-index: 2;
+        
 
 
         &_logo {

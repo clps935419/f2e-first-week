@@ -1,5 +1,6 @@
 <script>
   import {
+    computed,
     onMounted
   } from '@vue/runtime-core';
   import {
@@ -7,6 +8,7 @@
   } from 'vuex';
   import Activity from '@/components/Home/Activity.vue';
   import Restaurant from '@/components/Home/Restaurant.vue'
+
   export default {
     components: {
       Activity,
@@ -15,6 +17,8 @@
     setup() {
       const store = useStore();
       const init = () => {
+        console.log('ini')
+        store.dispatch('handleIsSearch',false);
         store.dispatch('Homepage/handleInit').then((res) => {
           handleData(res);
         });
@@ -25,22 +29,31 @@
           const img = new Image();
           img.src = item.Picture.PictureUrl1;
           img.onload = () => {
+            let isLoading = false;
             i++;
-            store.dispatch('handleLoading', i === data.length);
+            if(i === data.length){
+              isLoading = false;
+            }else{
+              isLoading = true;
+            }
+            store.dispatch('handleLoading', isLoading);
           }
         });
       }
+      const handleIsSearch = computed(()=>{
+        return store.getters['getIsSearch'];
+      });
       onMounted(() => {
         init();
       })
       return {
-
+        handleIsSearch
       }
     }
   }
 </script>
 <template>
-<div class="homepage">
+<div class="homepage" v-if="!handleIsSearch">
   <Activity />
   <Restaurant />
 </div>

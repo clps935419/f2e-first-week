@@ -14,7 +14,7 @@ export default {
 }
 </script>
 <template>
-<div class="loading-bg" v-if="!isLoading">
+<div class="loading-bg" v-if="isLoading">
     <div class="laoding-bar" >
         <div class="laoding-bar_img"></div>
         <div class="laoding-bar_text">Loading....</div>
