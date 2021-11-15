@@ -164,13 +164,13 @@
             }
 
             &::before {
-                left: 0px;
+                left: 0.1px;
                 -webkit-transform: matrix(-1, 0, 0, 1, 0, 0) rotate(5deg);
                 transform: matrix(-1, 0, 0, 1, 0, 0) rotate(5deg);
             }
 
             &::after {
-                right: 0px;
+                right:0.1px;
                 -webkit-transform: matrix(-1, 0, 0, 1, 0, 0) rotate(-5deg);
                 transform: matrix(-1, 0, 0, 1, 0, 0) rotate(-5deg);
             }
