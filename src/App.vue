@@ -4,6 +4,7 @@ import Banner from './components/Banner.vue';
 import Footer from './components/Footer.vue';
 import Loading from './components/Loading.vue';
 import SearchResult from './components/SearchResult.vue';
+import Page from '@/components/Page.vue'
 
 export default {
   components:{
@@ -11,7 +12,8 @@ export default {
     Banner,
     Footer,
     Loading,
-    SearchResult
+    SearchResult,
+    Page
   },
   setup() {
     
@@ -25,6 +27,7 @@ export default {
   <div class="content">
   <Loading/>  
   <SearchResult/>
+  <Page/>
   <router-view/>
   </div>
   <Footer/>

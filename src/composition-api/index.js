@@ -1,3 +1,5 @@
 import {getAuthorizationHeader} from './ajaxHeader';
-
-export const useAuthorizationHeader = getAuthorizationHeader;//API金鑰
+import { getSearchHandle } from './searchHandle.js';
+export const useAuthorizationHeader = getAuthorizationHeader;
+export const useSearchHandle = getSearchHandle;
+//API金鑰

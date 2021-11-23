@@ -95,6 +95,8 @@ export default createStore({
             return state.searchResult;
         },
         getIsSearch(state){
+            console.log('is search', state.isSearch);
+
             return state.isSearch;
         }
     },

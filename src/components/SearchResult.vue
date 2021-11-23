@@ -6,18 +6,21 @@ import {
         useStore
     } from 'vuex'
 import { watch } from '@vue/runtime-core';
+import {useSearchHandle} from '@/composition-api/'
 export default {
 setup(){
+    const {getSearchResult,handleIsLoading} = useSearchHandle();
+
     const store = useStore();
-    const getSearchResult = computed(() => {      
-        return store.getters['getSearchResult'];
-    });
+    // const getSearchResult = computed(() => {      
+    //     return store.getters['getSearchResult'];
+    // });
     const handleIsSearch = computed(()=>{
         return store.getters['getIsSearch'];
     });
-    const handleIsLoading = computed(()=>{
-        return store.getters['getIsLoading'];
-    });
+    // const handleIsLoading = computed(()=>{
+    //     return store.getters['getIsLoading'];
+    // });
     watch(getSearchResult,(item)=>{
         console.log('ite',item);
     })        
