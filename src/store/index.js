@@ -10,26 +10,61 @@ export default createStore({
     state: {
         isLoading: false,
         searchResult: [],
-        isSearch:false
+        isSearch: false,
+        showPageNum: 20, //一頁顯示幾筆
+        isShowPage: false,//是否顯示頁數元件
+        currentPageIndex: 1, //目前在第幾頁
+        currentTotalShowPageNum:0,//目前頁面能顯示幾頁
     },
     mutations: {
         setLoading(state, data) {
             state.isLoading = data;
         },
         setSearch(state, data) {
+            //搜尋結果
             console.log('setSearch', data);
             state.searchResult = data;
+            //重製目前頁數
+            state.currentPageIndex = 1;
+            //重製顯示page元件
+            state.isShowPage = false;
+            //重製總共能顯示幾頁
+            state.currentTotalShowPageNum = 0;
+
+            //計算目前能顯示幾頁
+            if (data.length > 0) {
+                state.currentTotalShowPageNum = Math.ceil(
+                    data.length / state.showPageNum
+                );
+                state.isShowPage = true;
+            } else {
+                state.currentTotalShowPageNum = 0;
+                state.isShowPage = false;
+            }
+
         },
-        setIsSearch(state,data){
+        setIsSearch(state, data) {
             state.isSearch = data;
-        }
+        },
+        setPageIndex(state, data) {
+            state.currentPageIndex = data;
+        },
+        setPageShow(state,data){
+            state.isShowPage = data;
+        },
     },
     actions: {
         handleLoading(context, data) {
             context.commit('setLoading', data);
         },
-        handleIsSearch(context,data){
+        handleIsSearch(context, data) {
             context.commit('setIsSearch', data);
+        },
+        handlePageIndex(context, data) {
+            context.commit('setPageIndex', data);
+        },
+        handlePageShow(context, data) {
+            context.commit('setPageShow', data);
         },
         async handleSearch(context, data) {
             //parms
@@ -91,13 +126,22 @@ export default createStore({
 
             return state.isLoading;
         },
-        getSearchResult(state){
+        getSearchResult(state) {
             return state.searchResult;
         },
-        getIsSearch(state){
+        getIsSearch(state) {
             console.log('is search', state.isSearch);
-
             return state.isSearch;
+        },
+        getShowPageNum(state) {
+            return state.showPageNum;
+        },
+        getTotalShowPageNum(state){
+            console.log('toat', state.currentTotalShowPageNum);
+            return state.currentTotalShowPageNum;
+        },
+        getIsShowPage(state){
+            return state.isShowPage;
         }
     },
     modules: {

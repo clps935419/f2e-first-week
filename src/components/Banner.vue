@@ -74,7 +74,6 @@
                 });
             }
             const handleData = (data) => {
-                console.log('data', data)
                 let i = 0;
                 data.forEach(item => {
                     const img = new Image();
@@ -83,7 +82,6 @@
                     img.onload = () => {
                         let isLoading = false;
                         i++;
-                        console.log('i',i,data.length,item.Name)
 
                         if (i === data.length) {
                             isLoading = false;

@@ -1,25 +1,37 @@
 <script>
 import { ref ,computed} from '@vue/reactivity'
+import { watch } from '@vue/runtime-core';
 import {useStore} from 'vuex'
+import {useSearchHandle} from '@/composition-api/'
 export default {
     setup(){
-        const pageNum =ref(10);
         const store = useStore();
-        const handleIsSearch = computed(()=>{
-        return store.getters['getIsSearch'];
-    });
-        return{
-            pageNum,
+        const {
+            getSearchResultLength,
+            getShowPageNum,
+            handleTotalShowPageNum,
+            handleIsShowPage,
             handleIsSearch
+            } = useSearchHandle();
+        
+        //點擊知道目前在哪一頁
+        const getCurrentPageNum = (e)=>{
+            store.dispatch('handlePageIndex',parseInt(e.target.textContent));
+        }
+        return{
+            handleIsSearch,
+            getCurrentPageNum,
+            handleTotalShowPageNum,
+            handleIsShowPage
         }
     }
 }
 </script>
 <template>
-  <div class="page" v-if="handleIsSearch">
+  <div class="page" v-if="handleIsSearch && handleIsShowPage">
       <div class="page_prev">&lt;&lt;</div>
       <ul class="page_item-box">
-          <li v-for="n in pageNum" :key="n">{{n}}</li>
+          <li v-for="n in handleTotalShowPageNum" :key="n" @click="getCurrentPageNum">{{n}}</li>
       </ul>
       <div class="page_end">&gt;&gt;</div>
   </div>
