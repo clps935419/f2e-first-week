@@ -9,7 +9,11 @@ import { watch } from '@vue/runtime-core';
 import {useSearchHandle} from '@/composition-api/'
 export default {
 setup(){
-    const {getSearchResult,handleIsLoading} = useSearchHandle();
+    const {
+        getSearchResult,
+        handleIsLoading,
+        handlePageSearchResult
+    } = useSearchHandle();
 
     const store = useStore();
     const handleIsSearch = computed(()=>{
@@ -22,7 +26,8 @@ setup(){
     return{
         getSearchResult,
         handleIsSearch,
-        handleIsLoading
+        handleIsLoading,
+        handlePageSearchResult
     }
 }
 }
@@ -38,7 +43,7 @@ setup(){
               not found result
           </div>
       <div class="result_content" v-else>
-          <div class="result_content-item" v-for="item in getSearchResult" :key="item.ID">
+          <div class="result_content-item" v-for="item in handlePageSearchResult" :key="item.ID">
               <img :src="item.Picture.PictureUrl1" alt="">
                 <div class="result_content-item-title">
                     {{item.Name}}

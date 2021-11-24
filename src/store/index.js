@@ -9,7 +9,8 @@ import {
 export default createStore({
     state: {
         isLoading: false,
-        searchResult: [],
+        searchResult: [],//搜尋完的所有資料
+        finalSearchResult:[],//判斷完畢分頁處理完的結果
         isSearch: false,
         showPageNum: 20, //一頁顯示幾筆
         isShowPage: false,//是否顯示頁數元件
@@ -32,16 +33,30 @@ export default createStore({
             state.currentTotalShowPageNum = 0;
 
             //計算目前能顯示幾頁
-            if (data.length > 0) {
+            if (data.length > state.showPageNum) {
                 state.currentTotalShowPageNum = Math.ceil(
                     data.length / state.showPageNum
                 );
                 state.isShowPage = true;
+                //計算資料的起始值跟最大值
+                const maxNum = state.currentPageIndex * state.showPageNum;
+                const minNum =
+                    state.currentPageIndex * state.showPageNum -
+                    state.showPageNum +
+                    1;
+                const filterResult = state.searchResult.filter(
+                    (item, index) => {
+                        let num = index + 1;
+                        return num >= minNum && num <= maxNum;
+                    }
+                );
+                state.finalSearchResult = filterResult;
+
             } else {
                 state.currentTotalShowPageNum = 0;
                 state.isShowPage = false;
+                state.finalSearchResult = data;
             }
-
         },
         setIsSearch(state, data) {
             state.isSearch = data;
@@ -122,26 +137,36 @@ export default createStore({
     },
     getters: {
         getIsLoading(state) {
-            console.log('loading', state.isLoading);
-
             return state.isLoading;
         },
         getSearchResult(state) {
             return state.searchResult;
         },
         getIsSearch(state) {
-            console.log('is search', state.isSearch);
             return state.isSearch;
         },
         getShowPageNum(state) {
             return state.showPageNum;
         },
         getTotalShowPageNum(state){
-            console.log('toat', state.currentTotalShowPageNum);
             return state.currentTotalShowPageNum;
         },
         getIsShowPage(state){
             return state.isShowPage;
+        },
+        //拿到分頁的搜尋結果
+        getPageSearchResult(state){
+            //計算資料的起始值跟最大值
+            const maxNum = state.currentPageIndex * state.showPageNum;
+            const minNum =
+                state.currentPageIndex * state.showPageNum -
+                state.showPageNum +
+                1;
+            const filterResult = state.searchResult.filter((item, index) => {
+                let num = index + 1;
+                return num >= minNum && num <= maxNum;
+            });
+            return filterResult;
         }
     },
     modules: {

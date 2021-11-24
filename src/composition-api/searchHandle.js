@@ -23,7 +23,10 @@ export function getSearchHandle() {
     });
     const handleTotalShowPageNum = computed(() =>{
         return store.getters['getTotalShowPageNum'];
-    })
+    });
+    const handlePageSearchResult = computed(()=>{
+        return store.getters['getPageSearchResult'];
+    });
     return {
         getSearchResult,
         handleIsSearch,
@@ -32,5 +35,6 @@ export function getSearchHandle() {
         getShowPageNum,
         handleTotalShowPageNum,
         handleIsShowPage,
+        handlePageSearchResult,
     };
 }
