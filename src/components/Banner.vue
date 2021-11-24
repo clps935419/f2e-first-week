@@ -93,6 +93,7 @@
                     img.onerror = function() {
                         //display error
                         console.error('i**',item.Name,'圖片讀取失敗')
+                        store.dispatch('handleLoading', false);
                         
                     };
                 });

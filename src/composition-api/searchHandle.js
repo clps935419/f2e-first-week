@@ -27,6 +27,9 @@ export function getSearchHandle() {
     const handlePageSearchResult = computed(()=>{
         return store.getters['getPageSearchResult'];
     });
+    const getCurrentPageIndex = computed(()=>{
+        return parseInt(store.getters['getCurrentPageIndex']);
+    })
     return {
         getSearchResult,
         handleIsSearch,
@@ -36,5 +39,6 @@ export function getSearchHandle() {
         handleTotalShowPageNum,
         handleIsShowPage,
         handlePageSearchResult,
+        getCurrentPageIndex,
     };
 }

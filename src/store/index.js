@@ -34,6 +34,7 @@ export default createStore({
 
             //計算目前能顯示幾頁
             if (data.length > state.showPageNum) {
+                console.log('目前第幾', state.currentTotalShowPageNum);
                 state.currentTotalShowPageNum = Math.ceil(
                     data.length / state.showPageNum
                 );
@@ -167,6 +168,10 @@ export default createStore({
                 return num >= minNum && num <= maxNum;
             });
             return filterResult;
+        },
+        getCurrentPageIndex(state){
+            console.log('--*---', state.currentPageIndex);
+            return state.currentPageIndex;
         }
     },
     modules: {
