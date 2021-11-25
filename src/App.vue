@@ -5,6 +5,9 @@ import Footer from './components/Footer.vue';
 import Loading from './components/Loading.vue';
 import SearchResult from './components/SearchResult.vue';
 import Page from '@/components/Page.vue'
+import Dialog from '@/components/Dialog.vue'
+
+import {useDialogHandle} from '@/composition-api/'
 
 export default {
   components:{
@@ -13,10 +16,24 @@ export default {
     Footer,
     Loading,
     SearchResult,
-    Page
+    Page,
+    Dialog
   },
   setup() {
-    
+    const{
+      getShade,
+      handleShadeOpen,
+      handleDialogOpen
+      } = useDialogHandle();
+    const closeShade = ()=>{
+      console.log('點--')
+      handleShadeOpen(false);
+      handleDialogOpen(false);
+    }
+    return{
+      getShade,
+      closeShade
+    }
   },
 }
 </script>
@@ -32,10 +49,9 @@ export default {
   </div>
   <Footer/>
   </div>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
+  <!-- 遮罩 -->
+  <div :class="['shade',{show:getShade}]" @click="closeShade"></div>
+  <Dialog/>
 </template>
 
 <style lang="scss">
@@ -50,6 +66,19 @@ body{
 }
 .content{
   min-height: 330px;
+}
+.shade{
+  display: none;
+  width: 100%;
+  height: 100Vh;
+  background: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  &.show{
+    display: block;
+  }
 }
 
 </style>

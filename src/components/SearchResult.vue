@@ -19,7 +19,9 @@ setup(){
     const handleIsSearch = computed(()=>{
         return store.getters['getIsSearch'];
     });
-    
+    const openDialog = (obj)=>{
+        store.dispatch('handleSetDialogContent',obj);
+    }
     watch(getSearchResult,(item)=>{
         // console.log('ite',item);
     })        
@@ -27,7 +29,8 @@ setup(){
         getSearchResult,
         handleIsSearch,
         handleIsLoading,
-        handlePageSearchResult
+        handlePageSearchResult,
+        openDialog
     }
 }
 }
@@ -43,7 +46,7 @@ setup(){
               not found result
           </div>
       <div class="result_content" v-else>
-          <div class="result_content-item" v-for="item in handlePageSearchResult" :key="item.ID">
+          <div class="result_content-item" v-for="item in handlePageSearchResult" :key="item.ID" @click="openDialog(item)">
               <img :src="item.Picture.PictureUrl1" alt="">
                 <div class="result_content-item-title">
                     {{item.Name}}

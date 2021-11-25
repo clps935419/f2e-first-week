@@ -9,13 +9,16 @@ import {
 export default createStore({
     state: {
         isLoading: false,
-        searchResult: [],//搜尋完的所有資料
-        finalSearchResult:[],//判斷完畢分頁處理完的結果
+        isOpenShade: false, //是否打開遮罩
+        isOpenDialog: false, //是否打開彈跳視窗
+        searchResult: [], //搜尋完的所有資料
+        finalSearchResult: [], //判斷完畢分頁處理完的結果
         isSearch: false,
         showPageNum: 20, //一頁顯示幾筆
-        isShowPage: false,//是否顯示頁數元件
+        isShowPage: false, //是否顯示頁數元件
         currentPageIndex: 1, //目前在第幾頁
-        currentTotalShowPageNum:0,//目前頁面能顯示幾頁
+        currentTotalShowPageNum: 0, //目前頁面能顯示幾頁
+        dialogContent: {}, //當下彈跳視窗的內容
     },
     mutations: {
         setLoading(state, data) {
@@ -52,7 +55,6 @@ export default createStore({
                     }
                 );
                 state.finalSearchResult = filterResult;
-
             } else {
                 state.currentTotalShowPageNum = 0;
                 state.isShowPage = false;
@@ -65,9 +67,20 @@ export default createStore({
         setPageIndex(state, data) {
             state.currentPageIndex = data;
         },
-        setPageShow(state,data){
+        setPageShow(state, data) {
             state.isShowPage = data;
         },
+        setDialogContent(state, data) {
+            state.dialogContent = data;
+            state.isOpenShade = true;
+            state.isOpenDialog = true;
+        },
+        setShadeOpen(state,data){
+            state.isOpenShade = data;
+        },
+        setDialogOpen(state,data){
+            state.isOpenDialog = data;
+        }
     },
     actions: {
         handleLoading(context, data) {
@@ -81,6 +94,15 @@ export default createStore({
         },
         handlePageShow(context, data) {
             context.commit('setPageShow', data);
+        },
+        handleSetDialogContent(context, data) {
+            context.commit('setDialogContent', data);
+        },
+        handleShadeOpen(context, data) {
+            context.commit('setShadeOpen', data);
+        },
+        handleDialogOpen(context,data){
+            context.commit('setDialogOpen',data);
         },
         async handleSearch(context, data) {
             //parms
@@ -149,14 +171,14 @@ export default createStore({
         getShowPageNum(state) {
             return state.showPageNum;
         },
-        getTotalShowPageNum(state){
+        getTotalShowPageNum(state) {
             return state.currentTotalShowPageNum;
         },
-        getIsShowPage(state){
+        getIsShowPage(state) {
             return state.isShowPage;
         },
         //拿到分頁的搜尋結果
-        getPageSearchResult(state){
+        getPageSearchResult(state) {
             //計算資料的起始值跟最大值
             const maxNum = state.currentPageIndex * state.showPageNum;
             const minNum =
@@ -169,10 +191,19 @@ export default createStore({
             });
             return filterResult;
         },
-        getCurrentPageIndex(state){
+        getCurrentPageIndex(state) {
             console.log('--*---', state.currentPageIndex);
             return state.currentPageIndex;
-        }
+        },
+        getOpenShade(state) {
+            return state.isOpenShade;
+        },
+        getIsOpenDialog(state) {
+            return state.isOpenDialog;
+        },
+        getDialogContent(state) {
+            return state.dialogContent;
+        },
     },
     modules: {
         Homepage,
