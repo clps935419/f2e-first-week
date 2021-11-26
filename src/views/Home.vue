@@ -17,7 +17,7 @@
     setup() {
       const store = useStore();
       const init = () => {
-        console.log('ini')
+        console.log('ini');
         store.dispatch('handleIsSearch',false);
         store.dispatch('Homepage/handleInit').then((res) => {
           handleData(res);

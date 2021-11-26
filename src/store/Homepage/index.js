@@ -16,6 +16,8 @@ export default {
             try {
                 let tmpObj = {};
                 const res = await apiGetActivity();
+                console.log('res', res);
+
                 const res2 = await apiGetRestaurant();
 
                 tmpObj.popularActivity = res.data;
@@ -24,6 +26,7 @@ export default {
                 context.commit('init', tmpObj);
                 return res.data;
             } catch (error) {
+                console.log('error',error)
             }
         },
     },

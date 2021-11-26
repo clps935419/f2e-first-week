@@ -11,9 +11,13 @@
             const popularRestaurant = computed(() => {
                 return store.getters['Homepage/getPopularRestaurant'];
             });
+            const openDialog = (obj)=>{
+                store.dispatch('handleSetDialogContent',obj);
+            }
 
             return {
-                popularRestaurant
+                popularRestaurant,
+                openDialog
             }
         }
     }
@@ -24,7 +28,7 @@
             <i></i><span>熱門餐飲</span>
         </div>
         <div class="Restaurant_content">
-            <div class="Restaurant_content-item" v-for="item in popularRestaurant" :key="item.ID">
+            <div class="Restaurant_content-item" v-for="item in popularRestaurant" :key="item.ID" @click="openDialog(item)">
                 <img :src="item.Picture.PictureUrl1" alt="">
                 <div class="Restaurant_content-item-title">
                     {{item.Name}}
@@ -82,6 +86,7 @@
             position: relative;
             // flex: 1;
             background: #FFFFFF;
+            cursor: pointer;
 
             &::before,
             &::after {

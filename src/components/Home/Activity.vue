@@ -11,9 +11,12 @@
             const popularActive = computed(() => {
                 return store.getters['Homepage/getPopularActivity'];
             });
-
+            const openDialog = (obj)=>{
+                store.dispatch('handleSetDialogContent',obj);
+            }
             return {
-                popularActive
+                popularActive,
+                openDialog
             }
         }
     }
@@ -24,8 +27,8 @@
             <i></i><span>熱門活動</span>
         </div>
         <div class="activity_content">
-            <div class="activity_content-item" v-for="item in popularActive" :key="item.id">
-                <img :src="item.Picture.PictureUrl1" alt="">
+            <div class="activity_content-item" v-for="item in popularActive" :key="item.id" @click="openDialog(item)">
+                <img :src="item.Picture.PictureUrl1" alt="" >
                 <div class="activity_content-item-right">
                     <div class="activity_content-item-title">
                         {{item.Name}}
@@ -88,6 +91,7 @@
             height: 228px;
             position: relative;
             background: #FFFFFF;
+            cursor: pointer;
             &::before,
             &::after {
                 position: absolute;
@@ -128,11 +132,13 @@
                     font-size: 16px;
                     line-height: 23px;
                     font-weight: bolder;
-
-                    /* black */
-
                     color: #0D0B0C;
                     margin-bottom: 14px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 .activity_content-item-content {
@@ -145,11 +151,10 @@
                     /* gray */
                     color: #ACACAC;
                     display: -webkit-box;
-                    -webkit-line-clamp: 5;
+                    -webkit-line-clamp: 4;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    height: 102px;
                     margin-bottom: 23.5px;
                 }
 
