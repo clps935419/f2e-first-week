@@ -43,11 +43,10 @@
             </div>
             <div class="dialog-itme_content">
                 <div>
-                    {{getDialogContent.Name}}
+                    {{getDialogContent.RestaurantName|| getDialogContent.HotelName ||getDialogContent.ActivityName ||getDialogContent.ScenicSpotName}}
                 </div>
                 <div>
                     {{getDialogContent.Description}}
-
                 </div>
                 <div>
                 </div>
@@ -74,7 +73,8 @@
 
     .dialog-item {
         width: 676px;
-        height: 500px;
+        height: auto;
+        max-height: 600px;
         background: white;
         padding: 32px;
 
@@ -99,6 +99,7 @@
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 5;
                 font-size: 14px;
+                line-height: 20px;
             }
         }
 

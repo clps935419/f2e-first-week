@@ -31,7 +31,7 @@
                 <img :src="item.Picture.PictureUrl1" alt="" >
                 <div class="activity_content-item-right">
                     <div class="activity_content-item-title">
-                        {{item.Name}}
+                        {{item.ActivityName}}
                     </div>
                     <div class="activity_content-item-content">
                         {{item.Description}}

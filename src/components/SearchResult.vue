@@ -49,7 +49,7 @@ setup(){
           <div class="result_content-item" v-for="item in handlePageSearchResult" :key="item.ID" @click="openDialog(item)">
               <img :src="item.Picture.PictureUrl1" alt="">
                 <div class="result_content-item-title">
-                    {{item.Name}}
+                    {{item.RestaurantName|| item.HotelName ||item.ActivityName ||item.ScenicSpotName}}
                 </div>
                 <div class="result_content-item-location">
                     <i></i>

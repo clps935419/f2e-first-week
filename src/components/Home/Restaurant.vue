@@ -31,7 +31,7 @@
             <div class="Restaurant_content-item" v-for="item in popularRestaurant" :key="item.ID" @click="openDialog(item)">
                 <img :src="item.Picture.PictureUrl1" alt="">
                 <div class="Restaurant_content-item-title">
-                    {{item.Name}}
+                    {{item.RestaurantName}}
                 </div>
                 <div class="Restaurant_content-item-location">
                     <i></i>
